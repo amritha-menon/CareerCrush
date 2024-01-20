@@ -1,0 +1,66 @@
+/* src/css/SignIn.css */
+
+.main-sign-in {
+    font-family: 'Josefin Sans';
+    width: 100vw;
+    height: auto;
+    background-color: #fffeec;
+  }
+  
+  .heading {
+    text-align: center;
+  }
+  
+  .sign-in-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .form-sign-in {
+    background-color: #5782bb;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    padding: 20px;
+    margin-bottom: 5px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  
+  .button-sign-in {
+    padding: 20px;
+  }
+  
+  button {
+    font-family: 'Josefin Sans';
+    background-color: #111111;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  .new-to-platform {
+    margin-top: 15px;
+    text-align: center;
+  }
+  
