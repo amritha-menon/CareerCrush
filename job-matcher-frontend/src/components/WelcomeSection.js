@@ -6,10 +6,13 @@ import Button from '@mui/material/Button';
 const WelcomeSection = () => {
   return (
     <div>
-      <h2>Welcome to Career Crush!</h2>
-      <p>Your gateway to exciting career opportunities.</p>
-      
+      <h2 style={{fontFamily: 'Josefin Sans'}}>Welcome to Career Crush!</h2>
+      <p style={{fontFamily: 'Josefin Sans'}}>Your gateway to exciting career opportunities.</p>
+      <p style={{fontFamily: 'Josefin Sans'}}> Click on the ✔ if you want to be considered for the job and click on X if you are not interested in it.</p>
+      <p style={{fontFamily: 'Josefin Sans'}}> The recruiter from the companies will review your resume.</p>
+      <></>
     </div>
+    
   );
 };
 
