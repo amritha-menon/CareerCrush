@@ -298,7 +298,6 @@ app.post("/savedJobs", async (req, res) => {
     try{
         const user_id = req.query.user_id;
         const user = await User.findOne({ user_id });
-
         if (!user) {
         return res.status(404).json({ error: 'User not found' });
         }
