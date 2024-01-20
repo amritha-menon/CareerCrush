@@ -6,7 +6,7 @@ import '../css/CardComponent.css';
 
 function CardComponent() {
   return (
-    <Card style={{ width: '48rem' }}>
+    <Card style={{ width: '100%' }}>
       <Card.Img variant="top" src={logo} style={{ maxWidth: '100%', height: 'auto' }} />
       <Card.Body>
         <Card.Title className="company-title"><strong>Company: </strong>YYYY</Card.Title>

@@ -2,6 +2,7 @@
 
 .home-page {
     display: flex;
+
     justify-content: space-between;
     align-items: center;
     height: 100vh;
@@ -58,4 +59,13 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
-  
+  .see-job-button {
+    font-family: 'Josefin Sans';
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #5782bb; /* Set your desired button color */
+    color: #111111; /* Set your desired text color */
+  }

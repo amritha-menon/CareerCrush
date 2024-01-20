@@ -1,20 +1,49 @@
 // src/components/SignIn.js
-
+import axios from 'axios';
 import React, { useState } from 'react';
 import '../css/SignIn.css';
+import { useNavigate } from 'react-router-dom'; 
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 const SignIn = () => {
+  const navigate = useNavigate(); 
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Perform sign-in logic (e.g., send data to backend)
-
-    // Reset form fields after submission
-    setEmail('');
-    setPassword('');
+    try {
+      // Make an API request to your backend for user authentication
+      const response = await axios.post('http://localhost:3000/login', {
+        email: email,
+        password: password,
+      });
+      if (response.status === 200) {
+        const { user_id } = response.data;
+        localStorage.setItem('user_id', user_id);
+        setOpenSnackbar(true);
+        setTimeout(() => {
+          navigate('/home');
+        }, 3000);
+      } else {
+        console.error('Authentication failed:', response.data.error);
+      }
+      setEmail('');
+      setPassword('');
+    } catch (error) {
+      // Handle network errors or other issues
+      console.error('Error during login:', error.message);
+      // Display an error message to the user
+    }
+  
   };
 
   return (
@@ -54,6 +83,20 @@ const SignIn = () => {
           New to Career Crush? <a href='/signup'>Sign up</a>
         </p>
       </div>
+      <Snackbar
+      open={openSnackbar}
+      autoHideDuration={6000}
+      onClose={handleCloseSnackbar}
+    >
+      <MuiAlert
+        elevation={6}
+        variant="filled"
+        onClose={handleCloseSnackbar}
+        severity="success"
+      >
+        Login successful!
+      </MuiAlert>
+    </Snackbar>
     </div>
   );
 };
