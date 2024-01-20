@@ -1,0 +1,61 @@
+/* HomePage.css */
+
+.home-page {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+  }
+  
+  .buttons-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .yes-button,
+  .no-button {
+    padding: 10px 20px;
+    size: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .yes-button{
+    font-size: 16px;
+  }
+  
+  .no-button {
+    font-size: 20px;
+  }
+  
+  .no-button:hover {
+    background-color: #ff3333; /* Light red when hovered */
+  }
+  
+  .yes-button:hover {
+    background-color: green; /* Darker blue when hovered */
+  }
+
+
+
+
+  .card-container {
+    flex: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
