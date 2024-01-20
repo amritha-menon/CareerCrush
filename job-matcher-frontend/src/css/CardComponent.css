@@ -1,0 +1,33 @@
+/* CardComponent.css */
+
+.card {
+    width: 48rem;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .company-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .card-description {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  .list-item {
+    background-color: #fffeec;
+    border: 1px solid #40699f;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+  
+  .list-item strong {
+    margin-right: 8px;
+    color: #030303;
+  }
+  
