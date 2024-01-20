@@ -1,0 +1,2 @@
+DB_CONNECTION = mongodb+srv://sidharthaamperayani:MQUuupUTGw1RKorm@career-crush-cluster0.rnwuxhb.mongodb.net/?retryWrites=true&w=majority
+API_KEY = "70c15596-b7f9-4c14-8541-4f7e4736bdd3"
