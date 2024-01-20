@@ -22,29 +22,59 @@ mongoose.connect(
     console.log("Connection to DB established")
 });
 
+/*
+Create user
+*/
 app.post("/user", async (req, res) => {
-    try{
-        const { first_name, last_name, email, password } = req.body;
+    let newUser;
+
+    try {
+        const { first_name, last_name, email, password, isApplicant, resume, employerCompany } = req.body;
 
         // Check if the email is already in use
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
-            // If the email is already in use, respond with an error
             return res.status(400).json({ error: 'Email is already in use' });
         }
 
-        const newUser = new User({ first_name, last_name, email, password });
-        await newUser.save();
-        // res.json(newUser);
-        res.status(201).json({ message: 'User created successfully', user_id: newUser.user_id });
+        if (isApplicant==="true") {
+            // If isApplicant is true, create a user with resume
+            newUser = new User({ 
+                first_name, 
+                last_name, 
+                email, 
+                password, 
+                isApplicant, 
+                resume: {
+                    data: resumeBuffer,
+                    contentType: 'application/pdf', // Set the appropriate MIME type
+                }, 
+            });
+        } else {
+            // If isApplicant is false, create a user with employerCompany
+            newUser = new User({ 
+                first_name, 
+                last_name, 
+                email, 
+                password, 
+                isApplicant, 
+                employerCompany 
+            });
+        }
 
-    }catch(err){
+        await newUser.save();
+
+        res.status(201).json({ message: 'User created successfully', user_id: newUser.user_id });
+    } catch (err) {
         console.error('Error creating user:', err.message);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
+/*
+Read user
+*/
 app.get('/user', async (req, res) => {
     try {
       const user_id = req.query.user_id;
@@ -61,6 +91,9 @@ app.get('/user', async (req, res) => {
     }
   });
 
+/*
+Update user
+*/
 app.put('/user', async (req, res) => {
     try {
       const userIdToUpdate = req.query.user_id;
@@ -81,6 +114,8 @@ app.put('/user', async (req, res) => {
         last_name: req.body.last_name,
         email: emailVerification,
         password: req.body.password,
+        isApplicant: req.body.isApplicant,
+        resume: req.body.resume,
       };
       const user = await User.findOneAndUpdate(
         { user_id: userIdToUpdate },
@@ -99,6 +134,9 @@ app.put('/user', async (req, res) => {
     }
 });
 
+/*
+Delete user
+*/
 app.delete('/user', async (req, res) => {
     const userIdToDelete = req.query.user_id;
   
@@ -115,7 +153,10 @@ app.delete('/user', async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   });
-  
+
+/*
+user (applicant/ employer) login
+*/
 app.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -136,6 +177,9 @@ app.post('/login', async (req, res) => {
     }
 });
 
+/*
+fetches all the jobs posted on crackedDevs API
+*/
 app.get('/fetchJobs', async (req, res) => {
     try {
         const LIMIT = 30; // No of jobs to fetch
@@ -247,6 +291,9 @@ app.get('/filteredJobs', async (req, res) => {
     }
   });
   
+/*
+populates the database when a user likes a job | all relevant data of the job and user are stored here
+*/
 app.post("/savedJobs", async (req, res) => {
     try{
         const user_id = req.query.user_id;
@@ -258,8 +305,11 @@ app.post("/savedJobs", async (req, res) => {
         const first_name = user.first_name;
         const last_name = user.last_name;
         const email = user.email;
-        const { job_id, title, company, min_salary_usd, max_salary_usd, location_iso, job_type, degree_required, url, technologies, resume } = req.body;
-        const newSavedJob = new SavedJobs({ user_id, first_name, last_name, email, job_id, title, company, min_salary_usd, max_salary_usd, location_iso, job_type, degree_required, url, technologies, resume });
+        // const resume = user.resume;
+        const isApplicant = user.isApplicant
+        const employerCompany = user.employerCompany
+        const { job_id, title, company, min_salary_usd, max_salary_usd, location_iso, job_type, degree_required, url, technologies } = req.body;
+        const newSavedJob = new SavedJobs({ user_id, first_name, last_name, email, isApplicant, employerCompany, job_id, title, company, min_salary_usd, max_salary_usd, location_iso, job_type, degree_required, url, technologies });
         await newSavedJob.save();
         res.status(201).json({ message: 'Job saved successfully' });
     }catch(err){
@@ -268,12 +318,51 @@ app.post("/savedJobs", async (req, res) => {
     }
 });
 
-app.get("/savedJobs", async (req, res) => {
+/*
+fetches all the relevant savedJobs for a particular user_id | Used to populate all the relevant details of jobs liked by the user
+*/
+app.get("/savedJobs/userID", async (req, res) => {
     try {
         const userId = req.query.user_id;
 
         // Find all saved jobs for the given user_id
         const savedJobs = await SavedJobs.find({ user_id: userId });
+
+        res.json(savedJobs);
+    } catch (error) {
+        console.error('Error fetching saved jobs:', error.message);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+/*
+fetches all the relevant savedJobs for a particular job_id | this endoint can be used by the employer to 
+get all the user who liked a particular job_id 
+*/
+app.get("/savedJobs/jobID", async (req, res) => {
+    try {
+        const jobID = req.query.job_id;
+
+        // Find all saved jobs for the given job_id
+        const savedJobs = await SavedJobs.find({ job_id: jobID });
+
+        res.json(savedJobs);
+    } catch (error) {
+        console.error('Error fetching saved jobs:', error.message);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+/*
+fetches all the relevant savedJobs for a particular company | this endpoint can be used by the employer to 
+get all the users who liked a particular company 
+*/
+app.get("/savedJobs/company", async (req, res) => {
+    try {
+        const company = req.query.company;
+
+        // Find all saved jobs for the given company
+        const savedJobs = await SavedJobs.find({ company: company });
 
         res.json(savedJobs);
     } catch (error) {

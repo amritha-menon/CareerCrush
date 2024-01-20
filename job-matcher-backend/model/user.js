@@ -63,6 +63,17 @@ const userSchema = new mongoose.Schema({
         type: String, 
         required: true 
     },
+    employerCompany: {
+        type: String,
+    },
+    resume: {
+        data: Buffer,
+        contentType: String,
+    },
+    isApplicant: {
+        type: Boolean,
+        required: true
+    },
 });
 
 userSchema.pre('save', async function (next) {
