@@ -18,6 +18,17 @@ const savedJobsSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    employerCompany: {
+        type: String,
+    },
+    resume: {
+        data: Buffer,
+        contentType: String,
+    },
+    isApplicant: {
+        type: Boolean,
+        required: true
+    },
     job_id: {
         type: Number,
         required: true,
