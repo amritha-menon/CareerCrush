@@ -22,6 +22,10 @@
     color: #5782bb;
     font-weight: 800;
   }
+  .job-type {
+    display: flex;
+    flex-direction: column;
+  }
   .buttons-container {
     flex: 1;
     display: flex;

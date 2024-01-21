@@ -79,7 +79,6 @@ app.get('/user', async (req, res) => {
     try {
       const user_id = req.query.user_id;
       const user = await User.findOne({ user_id });
-  
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
       }
@@ -242,9 +241,9 @@ app.get('/filteredJobs', async (req, res) => {
         }
   
         // Filtering based on location_iso
-        if (location_iso && job.location_iso.toLowerCase() !== location_iso.toLowerCase()) {
-          return false;
-        }
+        // if (location_iso && job.location_iso.toLowerCase() !== location_iso.toLowerCase()) {
+        //   return false;
+        // }
   
         if (job_type) {
             if (job.job_type === null){
@@ -258,9 +257,9 @@ app.get('/filteredJobs', async (req, res) => {
         }
   
         // Filtering based on skill_levels
-        if (skill_levels && !skill_levels.split(',').includes(job.skill_level)) {
-          return false;
-        }
+        // if (skill_levels && !skill_levels.split(',').includes(job.skill_level)) {
+        //   return false;
+        // }
   
         // Filtering based on degree_required
         if (degree_required && job.degree_required !== (degree_required === 'true')) {
@@ -323,7 +322,6 @@ fetches all the relevant savedJobs for a particular user_id | Used to populate a
 app.get("/savedJobs/userID", async (req, res) => {
     try {
         const userId = req.query.user_id;
-
         // Find all saved jobs for the given user_id
         const savedJobs = await SavedJobs.find({ user_id: userId });
 
