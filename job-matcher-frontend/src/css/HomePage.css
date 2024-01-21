@@ -1,13 +1,31 @@
 /* HomePage.css */
-
+@font-face {
+  font-family: 'Josefin Sans';
+  src: url('../fonts/JosefinSans-VariableFont_wght.ttf')format('truetype');
+}
 .home-page {
     display: flex;
+    font-family: 'Josefin Sans';
     justify-content: space-between;
     align-items: center;
     height: 100vh;
     padding: 20px;
   }
-  
+
+  .swipe {
+    display: flex;
+  }
+  .filters-container {
+    display: flex;
+    flex-direction: row;
+    font-family: 'Josefin Sans';
+    color: #5782bb;
+    font-weight: 800;
+  }
+  .job-type {
+    display: flex;
+    flex-direction: column;
+  }
   .buttons-container {
     flex: 1;
     display: flex;
@@ -58,4 +76,13 @@
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
-  
+  .see-job-button {
+    font-family: 'Josefin Sans';
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #5782bb; /* Set your desired button color */
+    color: #111111; /* Set your desired text color */
+  }
