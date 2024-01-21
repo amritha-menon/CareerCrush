@@ -64,7 +64,10 @@ const savedJobsSchema = new mongoose.Schema({
     },
     resume: {
         type: Buffer, // Assuming you store the PDF as a binary buffer
-    }
+    },
+    image_url: {
+        type: String,
+    },
 });
 
 const SavedJobs = mongoose.model('SavedJobs', savedJobsSchema);

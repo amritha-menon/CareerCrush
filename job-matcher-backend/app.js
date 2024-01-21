@@ -197,7 +197,7 @@ app.post('/login', async (req, res) => {
 
         if (user) {
         // User exists, authentication successful
-        res.status(200).json({ message: 'Authentication successful', user_id: user.user_id });
+        res.status(200).json({ message: 'Authentication successful', user_id: user.user_id , isApplicant : user.isApplicant });
         } else {
         // User not found or password incorrect
         res.status(401).json({ error: 'Authentication failed. Invalid email or password' });
@@ -253,9 +253,9 @@ app.get('/filteredJobs', async (req, res) => {
       const filteredJobs = jobsData.filter(job => {
 
         // Filtering based on image_url
-        // if(job.image_url === "" || job.image_url){
-        //     return false;
-        // }
+        if(job.image_url === "" || job.image_url){
+            job.image_url = "https://imgix.cryptojobslist.com/5a671b80-8a8f-4d12-8d29-b3960248fdc5.png?w=200&h=200&auto=format&fit=fill&fill=solid";
+        }
 
         // Filtering based on company
         if (company && job.company.toLowerCase() !== company.toLowerCase()) {
@@ -338,8 +338,8 @@ app.post("/savedJobs", async (req, res) => {
         // const resume = user.resume;
         const isApplicant = user.isApplicant
         const employerCompany = user.employerCompany
-        const { job_id, title, company, min_salary_usd, max_salary_usd, location_iso, job_type, degree_required, url, technologies } = req.body;
-        const newSavedJob = new SavedJobs({ user_id, first_name, last_name, email, isApplicant, employerCompany, job_id, title, company, min_salary_usd, max_salary_usd, location_iso, job_type, degree_required, url, technologies });
+        const { job_id, title, company, min_salary_usd, max_salary_usd, location_iso, job_type, degree_required, url, technologies, image_url } = req.body;
+        const newSavedJob = new SavedJobs({ user_id, first_name, last_name, email, isApplicant, employerCompany, job_id, title, company, min_salary_usd, max_salary_usd, location_iso, job_type, degree_required, url, technologies,image_url });
         await newSavedJob.save();
         res.status(201).json({ message: 'Job saved successfully' });
     }catch(err){

@@ -53,7 +53,7 @@ const SignUp = () => {
         password,
         isApplicant: isApplicant.toString(), // Use isApplicant in the request payload
         ...(isApplicant && { file }), // Include resume if isApplicant is true
-        ...(!isApplicant && { company_name: companyName }), // Include company_name if isApplicant is false
+        ...(!isApplicant && { employerCompany: companyName }), // Include company_name if isApplicant is false
       };
 
       const response = await axios.post('http://localhost:3000/user', userData,{
@@ -73,9 +73,10 @@ const SignUp = () => {
       const { user_id } = response.data;
       localStorage.setItem('user_id', user_id);
       setOpenSnackbar(true);
-
+      
       setTimeout(() => {
-        navigate('/home');
+        const destination = isApplicant ? '/home' : '/homeEmployee';
+        navigate(destination, { state: { user_id } });
       }, 3000);
     } catch (error) {
       console.error('Error creating user', error.message);

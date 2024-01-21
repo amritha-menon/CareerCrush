@@ -27,15 +27,18 @@ const SignIn = () => {
         password: password,
       });
       if (response.status === 200) {
-        const { user_id } = response.data;
+        const { message, user_id, isApplicant } = response.data;
         localStorage.setItem('user_id', user_id);
         setOpenSnackbar(true);
+        console.log(isApplicant);
         setTimeout(() => {
-          navigate('/home');
+          const destination = isApplicant ? '/home' : '/homeEmployee';
+          navigate(destination, { state: { user_id } });
         }, 3000);
       } else {
         console.error('Authentication failed:', response.data.error);
       }
+      
       setEmail('');
       setPassword('');
     } catch (error) {
