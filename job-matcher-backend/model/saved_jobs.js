@@ -27,7 +27,6 @@ const savedJobsSchema = new mongoose.Schema({
     },
     isApplicant: {
         type: Boolean,
-        required: true
     },
     job_id: {
         type: Number,
