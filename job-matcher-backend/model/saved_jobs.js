@@ -27,7 +27,6 @@ const savedJobsSchema = new mongoose.Schema({
     },
     isApplicant: {
         type: Boolean,
-        required: true
     },
     job_id: {
         type: Number,
@@ -64,7 +63,10 @@ const savedJobsSchema = new mongoose.Schema({
     },
     resume: {
         type: Buffer, // Assuming you store the PDF as a binary buffer
-    }
+    },
+    image_url: {
+        type: String,
+    },
 });
 
 const SavedJobs = mongoose.model('SavedJobs', savedJobsSchema);

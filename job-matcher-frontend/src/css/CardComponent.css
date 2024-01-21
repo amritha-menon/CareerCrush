@@ -1,10 +1,14 @@
 /* CardComponent.css */
-
+@font-face {
+  font-family: 'Josefin Sans';
+  src: url('../fonts/JosefinSans-VariableFont_wght.ttf')format('truetype');
+}
 .card {
     width: 48rem;
     margin: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #5782bb
+    background-color: #5782bb;
+    font-family: 'Josefin Sans';
   }
   
   .company-title {
@@ -22,6 +26,14 @@
   }
   
   .list-item {
+    background-color: #fffeec;
+    border: 1px solid #40699f;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+
+  .card-description{
     background-color: #fffeec;
     border: 1px solid #40699f;
     padding: 10px;

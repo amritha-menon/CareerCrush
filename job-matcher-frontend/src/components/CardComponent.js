@@ -7,8 +7,8 @@ import '../css/CardComponent.css';
 function CardComponent({ job }) {
   return (
     <Card style={{ width: '100%' }}>
-      <Card.Img variant="top" src={logo} style={{ maxWidth: '100%', height: 'auto' }} />
-      <Card.Body>
+      <Card.Img variant="top" src={job.image_url} style={{ maxWidth: '100px', height: 'auto' ,display: 'block', margin: '0 auto',}} />
+      <Card.Body className="d-flex flex-column align-items-center">
         <br/>
         <Card.Title className="company-title"><strong>Company: </strong>{job.company}</Card.Title>
         <Card.Text className="card-description">
