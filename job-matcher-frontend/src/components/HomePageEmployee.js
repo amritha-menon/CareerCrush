@@ -49,7 +49,7 @@ const HomePageEmployee = () => {
         compnay: currentApplicant.company,
       }, {
         params: {
-          user_id,
+          user_id: currentApplicant.user_id,
         },
       });
     } catch (error) {

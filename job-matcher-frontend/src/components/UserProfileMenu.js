@@ -155,7 +155,7 @@ const UserProfileMenu = () => {
                 </ListItemAvatar> */}
                 <ListItemText
                   primary={job.title}
-                  secondary={`${job.company}`}
+                  secondary={`CrowdHack`}
                   style={{fontFamily: 'Josefin Sans'}}
                 />
               </ListItem>
