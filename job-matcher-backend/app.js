@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require('cors');
 const mongoose = require("mongoose");
+const multer = require("multer");
 require("dotenv/config")
 const app = express();
 app.use(cors());
@@ -8,6 +9,8 @@ const axios = require('axios');
 
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
+
 
 const User = require("./model/user");
 const SavedJobs = require("./model/saved_jobs");
@@ -22,14 +25,43 @@ mongoose.connect(
     console.log("Connection to DB established")
 });
 
+const path = require('path');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, 'files'));
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now();
+    cb(null, uniqueSuffix + file.originalname);
+  },
+});
+
+
+// require("./pdfDetails");
+// const PdfSchema = mongoose.model("PdfDetails");
+const upload = multer({ storage: storage });
+
+
+app.post("/upload-files",async (req, res) => {
+  console.log("HEREEEEEEEEEEEEEEEEE",req.file);
+});
+
+app.get("/", async (req, res) => {
+  res.send("Success!!!!!!");
+});
+
+
 /*
 Create user
 */
-app.post("/user", async (req, res) => {
+// Add this line before your /user route
+app.use(upload.single("file"));
+app.post("/user",async (req, res) => {
     let newUser;
 
     try {
-        const { first_name, last_name, email, password, isApplicant, resume, employerCompany } = req.body;
+        const { first_name, last_name, email, password, isApplicant, file, employerCompany } = req.body;
 
         // Check if the email is already in use
         const existingUser = await User.findOne({ email });
@@ -47,7 +79,7 @@ app.post("/user", async (req, res) => {
                 password, 
                 isApplicant, 
                 resume: {
-                    data: resumeBuffer,
+                    data: file,
                     contentType: 'application/pdf', // Set the appropriate MIME type
                 }, 
             });

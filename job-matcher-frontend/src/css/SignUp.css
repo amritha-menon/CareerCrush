@@ -1,68 +1,71 @@
 /* src/css/SignUp.css */
 @font-face {
-    font-family: 'Josefin Sans';
-    src: url('../fonts/JosefinSans-VariableFont_wght.ttf')format('truetype');
+  font-family: 'Josefin Sans';
+  src: url('../fonts/JosefinSans-VariableFont_wght.ttf')format('truetype');
 }
 .main-sign-up {
-    font-family: 'Josefin Sans';
-    width: 100vw;
-    height: auto;
-    background-color: #fffeec;
-    
+  font-family: 'Josefin Sans';
+  width: 100vw;
+  height: auto;
+  background-color: #fffeec;
+  
 }
 .heading {
-    text-align: center;
+  text-align: center;
 }
 .sign-up-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center horizontally */
-    justify-content: center; /* Center vertically */
-    height: 100vh; /* Set the height to the viewport height for vertical centering */
-    
-    
-  }
-  .form-sign-up {
-    width: 400px;
-    background-color: #5782bb;
-  }
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    padding: 20px;
-    margin-bottom: 5px;
-  }
-  
-  input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-  }
-  .button-sign-up {
-    padding: 20px;
-  }
-  button {
-    font-family: 'Josefin Sans';
-    background-color: #111111;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
-  .already-have-account {
-    margin-top: 15px;
-    text-align: center;
-  }
-  
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+  height: 100vh; /* Set the height to the viewport height for vertical centering */
+}
+.form-sign-up {
+  width: 500px;
+  background-color: #5782bb;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+  /* Update the CSS for radio buttons and labels */
+.form-group-usertype label {
+  display: flex;
+  align-items: center; /* Align items vertically in a flex container */
+  padding: right 120px;
+}
+
+label {
+  display: block;
+  padding: 20px;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+.button-sign-up {
+  padding: 20px;
+}
+button {
+  font-family: 'Josefin Sans';
+  background-color: #111111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.already-have-account {
+  margin-top: 15px;
+  text-align: center;
+}
