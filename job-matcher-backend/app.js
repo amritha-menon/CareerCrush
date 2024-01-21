@@ -70,7 +70,6 @@ app.post("/user",async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ error: 'Email is already in use' });
         }
-
         if (isApplicant==="true") {
             // If isApplicant is true, create a user with resume
             newUser = new User({ 
