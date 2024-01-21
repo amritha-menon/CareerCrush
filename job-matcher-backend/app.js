@@ -213,6 +213,7 @@ fetches all the jobs posted on crackedDevs API
 */
 app.get('/fetchJobs', async (req, res) => {
   console.log('Hum hai');
+  console.log(req.query);
   const {
     company,
     min_salary,
