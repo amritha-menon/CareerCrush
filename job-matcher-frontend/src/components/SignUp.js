@@ -41,20 +41,6 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // const userData = {
-    //   first_name,
-    //   last_name,
-    //   email,
-    //   password,
-    //   isApplicant: isApplicant.toString(), // Use isApplicant in the request payload
-    //   file:file,
-    //   employerCompany: null
-    // };
-
-    // const formData = new FormData();
-    // formData.append("file",file);
-    // console.log(file);
-
     if (password !== confirmPassword) {
       console.error('Passwords do not match');
       return;
@@ -73,7 +59,7 @@ const SignUp = () => {
       const response = await axios.post('http://localhost:3000/user', userData,{
         headers: { "Content-Type": "multipart/form-data" },
       });
-      console.log(response)
+      // console.log(response)
       // const response = await axios.post('http://localhost:3000/user', userData);
 
       setFirstName('');
@@ -212,4 +198,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUp;

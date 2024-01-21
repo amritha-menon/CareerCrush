@@ -40,9 +40,39 @@ const HomePage = () => {
     setCurrentJobIndex((prevIndex) => prevIndex + 1);
   };
 
-  const handleYesClick = () => {
+  const handleYesClick = async () => {
     // Move to the next job
     setCurrentJobIndex((prevIndex) => prevIndex + 1);
+    const user_id = localStorage.getItem('user_id');
+
+  // Get the current job data
+    const currentJob = jobs[currentJobIndex];
+
+    try {
+      // Send a POST request to save the job
+      // console.log(currentJob.id,currentJob.title,currentJob.company,currentJob.min_salary_usd,currentJob.max_salary_usd);
+      // console.log(currentJob.location_iso, currentJob.job_type, currentJob.degree_required,  currentJob.url, currentJob.technologies);
+      await axios.post('http://localhost:3000/savedJobs', {
+        job_id: currentJob.id,
+        title: currentJob.title,
+        company: currentJob.company,
+        min_salary_usd: currentJob.min_salary_usd,
+        max_salary_usd: currentJob.max_salary_usd,
+        location_iso: currentJob.location_iso,
+        job_type: currentJob.job_type,
+        degree_required: currentJob.degree_required,
+        url: currentJob.url,
+        technologies: currentJob.technologies.join(','), // Convert array to comma-separated string
+      }, {
+        params: {
+          user_id,
+        },
+      });
+
+    } catch (error) {
+      console.error('Error saving job:', error.message);
+      // Handle the error, show a notification, or provide feedback to the user.
+    }
   };
 
   const handleJobTypeChange = (value) => {
@@ -74,6 +104,30 @@ const HomePage = () => {
     setSelectedTechnologies(selectedOptions);
   };
 
+  const fetchFilteredJobs = async () => {
+    console.log()
+    try {
+      const response = await axios.get('http://localhost:3000/filteredJobs', {
+        params: {
+          company: '', // Add other filter criteria here based on state values
+          min_salary: minSalary,
+          max_salary: maxSalary,
+          location_iso: '',
+          job_type: selectedJobTypes.join(','), // Convert array to comma-separated string
+          degree_required: isDegreeRequired,
+          technologies: selectedTechnologies.map(tech => tech.toLowerCase()).join(','), // Convert array to comma-separated string
+        },
+      });
+      console.log(response.data);
+      setJobs(response.data);
+      setCurrentJobIndex(0);
+    } catch (error) {
+      console.error('Error fetching filtered jobs:', error.message);
+    }
+  };
+
+  
+
 
   return (
     <div className="h">
@@ -81,34 +135,36 @@ const HomePage = () => {
       <WelcomeSection />
       <div className="filters-container">
           {/* Job Type Filter */}
+          <div className="job-type">
           <label>
           Job Type:
           <input
             type="checkbox"
-            value="Full-time"
-            checked={selectedJobTypes.includes('Full-time')}
-            onChange={() => handleJobTypeChange('Full-time')}
+            value="full_time"
+            checked={selectedJobTypes.includes('full_time')}
+            onChange={() => handleJobTypeChange('full_time')}
           />
           Full-time
         </label>
         <label>
           <input
             type="checkbox"
-            value="Part-time"
-            checked={selectedJobTypes.includes('Part-time')}
-            onChange={() => handleJobTypeChange('Part-time')}
+            value="part_time"
+            checked={selectedJobTypes.includes('part_time')}
+            onChange={() => handleJobTypeChange('part_time')}
           />
           Part-time
         </label>
         <label>
           <input
             type="checkbox"
-            value="Internship"
-            checked={selectedJobTypes.includes('Internship')}
-            onChange={() => handleJobTypeChange('Internship')}
+            value="internship"
+            checked={selectedJobTypes.includes('internship')}
+            onChange={() => handleJobTypeChange('internship')}
           />
           Internship
         </label>
+        </div>
           {/* Degree Required Filter */}
           <label>
           Degree Required:
@@ -155,11 +211,14 @@ const HomePage = () => {
             ))}
           </select>
         </label>
+        <div style={{marginTop: '40px'}}>
+        <button onClick={fetchFilteredJobs}>
+          Filter Jobs
+        </button>
+        </div>
         </div>
       <div className='home-page'>
-      
-
-        {currentJobIndex < jobs.length ? (
+        {jobs && currentJobIndex < jobs.length ? (
           <div className='swipe'>
        
             <div className="buttons-container">
