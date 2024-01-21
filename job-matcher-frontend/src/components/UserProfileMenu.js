@@ -17,6 +17,8 @@ const UserProfileMenu = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [savedJobs, setSavedJobs] = useState([]);
+  const [isMatchModalOpen, setIsMatchModalOpen] = useState(false);
+  const [matchedJobs, setMatchedJobs] = useState([]);
   const navigate = useNavigate(); 
 
   const style = {
@@ -43,6 +45,7 @@ const UserProfileMenu = () => {
     console.log('here');
     navigate('/');
   }
+
   const handleSavedJobsClick = async () => {
     const user_id = localStorage.getItem('user_id');
     try {
@@ -56,8 +59,25 @@ const UserProfileMenu = () => {
     }
   };
 
+  const handleMatchedJobsClick = async () => {
+    const user_id = localStorage.getItem('user_id');
+    try {
+      const response = await axios.get(`http://localhost:3000/matchedJobs/userID?user_id=${user_id}`);
+      console.log(response.data);
+      setMatchedJobs(response.data);
+      setIsMatchModalOpen(true);
+      handleClose(); // Close the menu when modal opens
+    } catch (error) {
+      console.error('Error fetching saved jobs:', error.message);
+    }
+  };
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleCloseMatchModal = () => {
+    setIsMatchModalOpen(false);
   };
 
   return (
@@ -80,8 +100,10 @@ const UserProfileMenu = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleSavedJobsClick}><Typography variant="h6" style={{fontFamily: 'Josefin Sans'}}>Saved Jobs</Typography></MenuItem>
+        <MenuItem onClick={handleSavedJobsClick}><Typography variant="h6" style={{fontFamily: 'Josefin Sans'}}>Applied Jobs</Typography></MenuItem>
+        <MenuItem onClick={handleMatchedJobsClick}><Typography variant="h6" style={{fontFamily: 'Josefin Sans'}}>Matched Jobs</Typography></MenuItem>
         <MenuItem onClick={handleSignOut}><Typography variant="h6" style={{fontFamily: 'Josefin Sans'}}>Sign Out</Typography></MenuItem>
+
       </Menu>
 
       {/* Modal for Saved Jobs */}
@@ -95,16 +117,45 @@ const UserProfileMenu = () => {
     }}
   >
         <div style={{ margin: '16px', maxWidth: '400px' }}>
-          <Typography variant="h6" style={{fontFamily: 'Josefin Sans'}}>Saved Jobs</Typography>
+          <Typography variant="h6" style={{fontFamily: 'Josefin Sans'}}>Applied Jobs</Typography>
           <List>
             {savedJobs.map((job) => (
               <ListItem key={job._id} style={{fontFamily: 'Josefin Sans'}}>
-                <ListItemAvatar>
+                {/* <ListItemAvatar>
                   <Avatar> # </Avatar>
-                </ListItemAvatar>
+                </ListItemAvatar> */}
                 <ListItemText
                   primary={job.title}
-                  secondary={`${job.company} - ${job.location_iso}`}
+                  secondary={`${job.company}`}
+                  style={{fontFamily: 'Josefin Sans'}}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </div>
+        </div>
+        
+      </Modal>
+      <Modal open={isMatchModalOpen} onClose={handleCloseMatchModal} slots={{ backdrop: Backdrop }} sx={style}>
+      <div
+    style={{
+      overflowY: 'auto', // Enable vertical scrolling
+      maxHeight: '60vh',
+      fontFamily: 'Josefin Sans',
+    }}
+  >
+        <div style={{ margin: '16px', maxWidth: '400px' }}>
+          <Typography variant="h6" style={{fontFamily: 'Josefin Sans'}}>Matched Jobs</Typography>
+          <Typography variant="h6" style={{fontFamily: 'Josefin Sans'}}> Congrats on your matches! The recruiter will contact you via email!</Typography>
+          <List>
+            {matchedJobs.map((job) => (
+              <ListItem key={job._id} style={{fontFamily: 'Josefin Sans'}}>
+                {/* <ListItemAvatar>
+                  <Avatar> # </Avatar>
+                </ListItemAvatar> */}
+                <ListItemText
+                  primary={job.title}
+                  secondary={`${job.company}`}
                   style={{fontFamily: 'Josefin Sans'}}
                 />
               </ListItem>

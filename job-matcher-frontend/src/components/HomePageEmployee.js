@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../css/HomePage.css';
 import logo from '../images/logo.jpeg';
-import NavBar from './NavBar';
+import NavBarEmployee from './NavBarEmployee';
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 import CardComponentEmployee from './CardComponentEmployee';
@@ -59,8 +59,10 @@ const HomePageEmployee = () => {
 
   return (
     <div className="h">
-      <NavBar />
-      <div style={{ textAlign: 'center', paddingTop: '40px' }}><h2 style={{ fontFamily: 'Josefin Sans'}}>Get Matched to most desired job seekers!</h2></div>
+      <NavBarEmployee />
+      <div style={{ textAlign: 'center'}}><h2 style={{ fontFamily: 'Josefin Sans'}}>Get Matched to most desired job seekers!</h2></div>
+      <div style={{ textAlign: 'center'}}><h2 style={{ fontFamily: 'Josefin Sans'}}>Click on the ✔ if you want to consider the applicant and click on X otherwise.</h2></div>
+      <div style={{ textAlign: 'center'}}><h2 style={{ fontFamily: 'Josefin Sans'}}>Once you match with an appication, they will be notified. You can connect with them via email! </h2></div>
       <div style={{padding: '100px', marginTop: '50px'}}>
         {currentApplicantIndex < applicants.length ? (
           <div className='swipe'>
@@ -78,7 +80,7 @@ const HomePageEmployee = () => {
           <Card style={{ width: '100%' }}>
             <Card.Img variant="top" src={logo} style={{ maxWidth: '100%', height: 'auto' }} />
             <Card.Body>
-              <p>No more jobs available.</p>
+              <p>No more applicants available.</p>
             </Card.Body>
           </Card>
         )}

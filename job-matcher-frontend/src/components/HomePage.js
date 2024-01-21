@@ -50,8 +50,8 @@ const HomePage = () => {
 
     try {
       // Send a POST request to save the job
-      // console.log(currentJob.id,currentJob.title,currentJob.company,currentJob.min_salary_usd,currentJob.max_salary_usd);
-      // console.log(currentJob.location_iso, currentJob.job_type, currentJob.degree_required,  currentJob.url, currentJob.technologies);
+      console.log(currentJob.id,currentJob.title,currentJob.company,currentJob.min_salary_usd,currentJob.max_salary_usd);
+      console.log(currentJob.location_iso, currentJob.job_type, currentJob.degree_required,  currentJob.url, currentJob.technologies);
       await axios.post('http://localhost:3000/savedJobs', {
         job_id: currentJob.id,
         title: currentJob.title,
@@ -62,7 +62,8 @@ const HomePage = () => {
         job_type: currentJob.job_type,
         degree_required: currentJob.degree_required,
         url: currentJob.url,
-        technologies: currentJob.technologies.join(','), // Convert array to comma-separated string
+        technologies: currentJob.technologies ? currentJob.technologies.join(',') : null, // Convert array to comma-separated string
+        image_url: currentJob.image_url,
       }, {
         params: {
           user_id,
@@ -105,9 +106,9 @@ const HomePage = () => {
   };
 
   const fetchFilteredJobs = async () => {
-    console.log()
+    console.log('here');
     try {
-      const response = await axios.get('http://localhost:3000/filteredJobs', {
+      const response = await axios.get('http://localhost:3000/fetchJobs', {
         params: {
           company: '', // Add other filter criteria here based on state values
           min_salary: minSalary,

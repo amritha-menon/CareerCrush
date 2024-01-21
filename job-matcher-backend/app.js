@@ -212,6 +212,19 @@ app.post('/login', async (req, res) => {
 fetches all the jobs posted on crackedDevs API
 */
 app.get('/fetchJobs', async (req, res) => {
+  console.log('Hum hai');
+  console.log(req.query);
+  const {
+    company,
+    min_salary,
+    max_salary,
+    location_iso,
+    job_type,
+    skill_levels,
+    degree_required,
+    technologies,
+  } = req.query;
+
     try {
         const LIMIT = 30; // No of jobs to fetch
         const response = await axios.get(
@@ -220,9 +233,20 @@ app.get('/fetchJobs', async (req, res) => {
             headers: {
             'api-key': process.env.API_KEY, // API KEY HERE
             },
+            params: {
+              company: company ? company : null,
+              min_salary: min_salary ? min_salary: null,
+              max_salary: max_salary ? max_salary: null,
+              location_iso: location_iso ? location_iso: null,
+              job_type: job_type ? job_type: null, // Convert array to comma-separated string
+              degree_required: degree_required ? degree_required: null,
+              technologies: technologies ? technologies: null,
+
+            }
         }
         );
         const jobsData = response.data;
+        console.log(jobsData);
         res.json(jobsData);
     } catch (error) {
         console.error('Error fetching jobs:', error.message);
@@ -232,10 +256,12 @@ app.get('/fetchJobs', async (req, res) => {
 
 // Add another route to filter and send the results to the frontend
 app.get('/filteredJobs', async (req, res) => {
+  console.log('HERE')
     try {
       // Fetch jobs data using the /fetchJobs route
       const response = await axios.get(`http://localhost:3000/fetchJobs`);
       const jobsData = response.data;
+      // console.log(jobsData);
   
       // Extract filter criteria from request query parameters
       const {
