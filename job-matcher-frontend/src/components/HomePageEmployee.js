@@ -5,7 +5,6 @@ import '../css/HomePage.css';
 import logo from '../images/logo.jpeg';
 import NavBar from './NavBar';
 import Card from 'react-bootstrap/Card';
-import CardComponent from './CardComponent';
 import axios from 'axios';
 import CardComponentEmployee from './CardComponentEmployee';
 
@@ -21,9 +20,7 @@ const HomePageEmployee = () => {
   const fetchApplicants = async () => {
     // e.preventDefault();
     try {
-      console.log("HEREEEEEE",user_id);
       const user = await axios.get(`http://localhost:3000/user?user_id=${user_id}`);
-      console.log("USERRRRRRR",user.data);
       const response = await axios.get(`http://localhost:3000/savedJobs/company?company=${user.data.employerCompany}`);
       console.log(response.data);
       setApplicants(response.data);

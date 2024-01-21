@@ -56,6 +56,7 @@ const SignUp = () => {
         ...(!isApplicant && { employerCompany: companyName }), // Include company_name if isApplicant is false
       };
 
+      console.log("RESUMEEE",file.name);
       const response = await axios.post('http://localhost:3000/user', userData,{
         headers: { "Content-Type": "multipart/form-data" },
       });
